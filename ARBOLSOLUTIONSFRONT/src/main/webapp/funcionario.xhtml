@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>Agregar Funcionario</title>
+	<style>
+body {
+	font-family: Arial, sans-serif;
+	background-color: #f0f0f0;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100vh;
+	margin: 0;
+}
+
+.container {
+	background-color: #fff;
+	padding: 20px;
+	border-radius: 8px;
+	box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+	width: 300px;
+}
+
+.form-group {
+	margin-bottom: 15px;
+}
+
+h\\:outputLabel {
+	display: block;
+	margin-bottom: 5px;
+	font-weight: bold;
+}
+
+h\\:inputText, h\\:inputSecret {
+	width: 100%;
+	padding: 8px;
+	box-sizing: border-box;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+}
+
+h\\:commandButton {
+	width: 100%;
+	padding: 10px;
+	background-color: #4CAF50;
+	color: white;
+	border: none;
+	border-radius: 4px;
+	cursor: pointer;
+}
+
+h\\:commandButton:hover {
+	background-color: #45a049;
+}
+</style>
+</h:head>
+<h:body>
+	<div class="container">
+		<h:form id="funcionarioForm">
+			<h:panelGrid columns="2" cellpadding="5">
+				<h:outputLabel for="cedula" value="Cédula:" />
+				<h:inputText id="cedula"
+					value="#{funcionarioBean.funcionario.cedula}" required="true"
+					requiredMessage="La cédula es obligatoria"
+					readonly="#{funcionarioBean.editando}" />
+
+				<h:outputLabel for="nombre" value="Nombre:" />
+				<h:inputText id="nombre"
+					value="#{funcionarioBean.funcionario.nombre}" required="true"
+					requiredMessage="El nombre es obligatorio" />
+
+				<h:outputLabel for="clave" value="Clave:" />
+				<h:inputSecret id="clave"
+					value="#{funcionarioBean.funcionario.clave}" required="true"
+					requiredMessage="La clave es obligatoria" />
+
+				<!-- Botón para guardar o modificar -->
+				<h:outputLabel />
+				<p:commandButton
+					value="#{funcionarioBean.editando ? 'Modificar Funcionario' : 'Guardar Funcionario'}"
+					action="#{funcionarioBean.guardar}" styleClass="button"
+					update="table" />
+			</h:panelGrid>
+
+			<!-- Botón para volver al login -->
+			<p:commandButton value="Volver al Login"
+				action="login.xhtml?faces-redirect=true" styleClass="button" />
+
+			<!-- Tabla para mostrar los funcionarios desde la base de datos -->
+			<h2>Lista de Funcionarios</h2>
+			<p:dataTable id="table" value="#{funcionarioBean.listaFuncionarios}"
+				var="funcionario" border="1">
+				<p:column headerText="Cédula">
+					<h:outputText value="#{funcionario.cedula}" />
+				</p:column>
+				<p:column headerText="Nombre">
+					<h:outputText value="#{funcionario.nombre}" />
+				</p:column>
+				<p:column headerText="Clave">
+					<h:outputText value="#{funcionario.clave}" />
+				</p:column>
+
+				<!-- Nueva columna para el botón de editar -->
+				<p:column headerText="Acciones">
+					<p:commandButton value="Editar"
+						action="#{funcionarioBean.seleccionarParaEditar(funcionario)}"
+						update="funcionarioForm" />
+					<p:commandButton value="Eliminar"
+						action="#{funcionarioBean.eliminar(funcionario)}" update="table"
+						onclick="return confirm('¿Está seguro de que desea eliminar este funcionario?');" />
+				</p:column>
+			</p:dataTable>
+		</h:form>
+
+
+
+
+
+	</div>
+</h:body>
+
+</html>

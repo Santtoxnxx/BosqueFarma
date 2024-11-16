@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"> 
+<h:head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Inicio</title>
+    <style>
+   
+        body {
+            font-family: 'Arial', sans-serif;
+            background-image: url('resources/maxresdefault.jpg');
+            background-size: cover;
+            background-position: center;
+        }
+
+        /* Centrar el formulario */
+        .form-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        /* Estilos del contenido del formulario */
+        .form-content {
+            border: 1px solid #ccc;
+            padding: 30px;
+            border-radius: 10px;
+            background-color: #f9f9f9;
+            text-align: center;
+            width: 350px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para el cuadro */
+        }
+
+        /* Estilo global para los botones */
+        .button {
+            padding: 12px 20px;
+            font-size: 16px;
+            background-color: #3e4729;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 15px;
+            width: 100%;  /* Todos los botones tienen el mismo ancho */
+        }
+
+        /* Efecto hover para los botones */
+        .button:hover {
+            background-color: #f5841f;
+        }
+
+        /* Estilo para las etiquetas y los campos */
+        .form-row {
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .form-label {
+            font-weight: bold;
+            color: #3e4729;
+            text-align: left;
+            margin-right: 10px;
+            width: 120px; /* Ancho fijo para las etiquetas */
+        }
+
+        .form-input {
+            flex-grow: 1;
+        }
+
+        /* Mensaje de éxito o error */
+        .message {
+            color: red;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+
+        /* Indicador de estado */
+        .status-dot {
+            height: 8px;
+            width: 8px;
+            background-color: red;
+            border-radius: 50%;
+            display: inline-block;
+            margin-top: 10px;
+        }
+    </style>
+</h:head>
+<h:body  style="background-image: url('resources/maxresdefault.jpg'); background-size: cover; background-position: center;">
+    <div class="form-container">
+        <div class="form-content">
+            <h:form>
+                <!-- Mostrar mensaje de bienvenida con el nombre del usuario -->
+                <h:outputText value="Bienvenido al sistema, #{loginBean.nombre}!" />
+                <br/>
+                <!-- Botones para las diferentes secciones -->
+                <h:commandButton value="Asignar Turno" action="turno.xhtml?faces-redirect=true" styleClass="button" />
+                <br/>
+                <h:commandButton value="Ver Inventario" action="inventario.xhtml?faces-redirect=true" styleClass="button" />
+                <br/>
+                <h:commandButton value="Ver Estadísticas" action="estadisticas.xhtml?faces-redirect=true" styleClass="button" />
+                <br/>
+                <h:commandButton value="Cerrar sesión" action="#{loginBean.logout}" styleClass="button" />
+            </h:form>
+        </div>
+    </div>
+</h:body>
+</html>

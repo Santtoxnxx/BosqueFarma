@@ -1,0 +1,158 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+    <title>Gestión de Inventario</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+        }
+
+        table {
+            width: 80%;
+            margin: 0 auto;
+            border-collapse: collapse;
+            border: 1px solid #ddd;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        tr:hover {
+            background-color: #ddd;
+        }
+
+        .button {
+            padding: 20px 40px;
+            font-size: 16px;
+            background-color: #3e4729;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-align: center;
+            margin-top: 15px;
+            width: 250px;
+        }
+
+        .button:hover {
+            background-color: #f5841f;
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+            width: 80%;
+            margin: 20px auto;
+        }
+
+        .ui-paginator {
+            background-color: #f2f2f2;
+            padding: 10px;
+            text-align: center;
+        }
+
+        .ui-paginator-pages {
+            display: inline-block;
+        }
+
+        .ui-paginator-page {
+            margin: 0 5px;
+            padding: 8px 12px;
+            background-color: #4CAF50;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .ui-paginator-page.ui-state-active {
+            background-color: #f5841f;
+            color: white;
+        }
+    </style>
+</h:head>
+
+<h:body>
+    <h:form>
+        <center>
+            <h1>Inventario de Medicamentos</h1>
+        </center>
+
+        <p:dataTable var="inventario"
+            value="#{inventarioBean.listaInventario}" paginator="true" rows="5"
+            paginatorTemplate="{PageLinks}"
+            currentPageReportTemplate="Página {currentPage} de {totalPages}">
+            <p:column headerText="ID Inventario">
+                <h:outputText value="#{inventario.idInventario}" />
+            </p:column>
+            <p:column headerText="Nombre Medicamento">
+                <h:outputText value="#{inventario.medicamento != null ? inventario.medicamento.nombreMedicamento : 'N/A'}" />
+            </p:column>
+            <p:column headerText="Cantidad">
+                <h:outputText value="#{inventario.cantidad}" />
+            </p:column>
+            <p:column headerText="Tipo de Movimiento">
+                <h:outputText value="#{inventario.tipoMovimiento}" />
+            </p:column>
+        </p:dataTable>
+
+        <div class="button-container">
+            <p:commandButton value="Agregar Medicamento" icon="pi pi-plus"
+                onclick="PF('dlgAgregar').show()" styleClass="ui-button-success"
+                type="button" />
+            <p:commandButton value="Eliminar Medicamento" icon="pi pi-trash"
+                onclick="PF('dlgEliminar').show()" styleClass="ui-button-danger"
+                type="button" />
+        </div>
+
+        <p:dialog header="Agregar Medicamento" widgetVar="dlgAgregar"
+            modal="true" width="400">
+            <h:panelGrid columns="2">
+                <p:outputLabel for="idInventario" value="ID Inventario:" />
+                <p:inputText id="idInventario"
+                    value="#{inventarioBean.nuevoInventario.idInventario}" 
+                    converter="javax.faces.Integer" />
+
+                <p:outputLabel for="cantidad" value="Cantidad:" />
+                <p:inputText id="cantidad"
+                    value="#{inventarioBean.nuevoInventario.cantidad}" />
+
+                <p:outputLabel for="tipoMovimiento" value="Tipo de Movimiento:" />
+                <p:inputText id="tipoMovimiento"
+                    value="#{inventarioBean.nuevoInventario.tipoMovimiento}" />
+            </h:panelGrid>
+
+            <p:commandButton value="Agregar" action="#{inventarioBean.agregar}"
+                icon="pi pi-check" update="@form"
+                oncomplete="PF('dlgAgregar').hide()" />
+        </p:dialog>
+
+        <p:dialog header="Eliminar Medicamento" widgetVar="dlgEliminar"
+            modal="true" width="400">
+            <h:panelGrid columns="2">
+                <p:outputLabel for="idEliminar" value="ID Inventario:" />
+                <p:inputText id="idEliminar" value="#{inventarioBean.idEliminar}" />
+            </h:panelGrid>
+
+            <p:commandButton value="Eliminar" action="#{inventarioBean.eliminar}"
+                icon="pi pi-check" update="@form" styleClass="ui-button-danger"
+                oncomplete="PF('dlgEliminar').hide()" />
+        </p:dialog>
+    </h:form>
+</h:body>
+</html>
+

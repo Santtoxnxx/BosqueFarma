@@ -1,0 +1,42 @@
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
+         id="WebApp_ID" version="4.0">
+
+  <!-- Página de bienvenida -->
+  <welcome-file-list>
+    <welcome-file>login.xhtml</welcome-file>
+    <welcome-file>index.xhtml</welcome-file>
+    <welcome-file>home.xhtml</welcome-file>
+  </welcome-file-list>
+
+  <!-- Configuración del servlet de JSF -->
+  <servlet>
+    <servlet-name>FacesServlet</servlet-name>
+    <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+
+  <!-- Mapeo del servlet -->
+  <servlet-mapping>
+    <servlet-name>FacesServlet</servlet-name>
+    <url-pattern>*.xhtml</url-pattern>
+  </servlet-mapping>
+
+  <!-- Guardado del estado de la vista -->
+  <context-param>
+    <param-name>javax.faces.STATE_SAVING_METHOD</param-name>
+    <param-value>client</param-value> <!-- o "server" -->
+  </context-param>
+
+  <!-- Configuración de PrimeFaces -->
+  <context-param>
+    <param-name>primefaces.THEME</param-name>
+    <param-value>nova-light</param-value> <!-- Cambia el tema según lo necesites -->
+  </context-param>
+
+  <!-- Listener de configuración -->
+  <listener>
+    <listener-class>com.sun.faces.config.ConfigureListener</listener-class>
+  </listener>
+</web-app>
